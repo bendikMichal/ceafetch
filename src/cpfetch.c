@@ -8,6 +8,8 @@
 
 # define MAX_LN 64
 
+#define CNORM "\x1B[00m"
+
 # ifdef _WIN32
 	# define WINDOWS true
 	# define LINUX false
@@ -58,11 +60,12 @@ int main () {
 	GetLocaleInfo(GetSystemDefaultUILanguage(), LOCALE_SENGLANGUAGE, LANG, MAX_LN);
 	# endif
 
-	printf("OS: %s \n", OS);
-	printf("USER: %s \n", USER);
-	printf("SHELL: %s \n", SHELL);
-	printf("TERM: %s \n", TERM);
-	printf("LANG: %s \n", LANG);
+	printf("\t\x1B[32m OS:%s \t%s \n", CNORM, OS);
+	printf("\t\x1B[33m USER:%s \t%s \n", CNORM, USER);
+	printf("\t\x1B[34m SHELL:%s\t%s \n", CNORM, SHELL);
+	printf("\t\x1B[35m TERM:%s \t%s \n", CNORM, TERM);
+	printf("\t\x1B[36m LANG:%s \t%s \n", CNORM, LANG);
+	printf("\t\t\t%s\x1B[40m \x1B[41m \x1B[42m \x1B[43m \x1B[44m \x1B[45m \x1B[46m \x1B[47m %s\n", CNORM, CNORM);
 
 	return 0;
 }
