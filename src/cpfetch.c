@@ -27,7 +27,7 @@
 	# define USER getenv("USERNAME")
 	char SHELL[MAX_LN];
 	# define TERM "..."
-	LPSTR LANG;
+	TCHAR LANG[MAX_LN];
 
 
 # endif
@@ -45,26 +45,24 @@
 # endif
 
 
-
 int main () {
 
 	# ifdef _WIN32
-	/* GetConsoleOriginalTitle(SHELL, (DWORD) MAX_LN); */
+	// Get SHELL
 	TCHAR name[MAX_LN];
-	GetConsoleTitle(name, (DWORD) MAX_LN);
+	GetConsoleTitle(name, MAX_LN);
 	int end = findChar(name, '-');
 	substring(name, SHELL, 0, end > 0 ? end : MAX_LN);
 
-	GetLocaleInfo(GetSystemDefaultUILanguage(), LOCALE_SENGLANGUAGE, LANG, 0);
-	
+	// Get LANG
+	GetLocaleInfo(GetSystemDefaultUILanguage(), LOCALE_SENGLANGUAGE, LANG, MAX_LN);
 	# endif
 
-	/* printf("%s, %s, %s, %s \n", OS, USER, SHELL, LANG); */
 	printf("OS: %s \n", OS);
 	printf("USER: %s \n", USER);
 	printf("SHELL: %s \n", SHELL);
+	printf("TERM: %s \n", TERM);
 	printf("LANG: %s \n", LANG);
-	printf("OS: %s \n", OS);
 
 	return 0;
 }
