@@ -10,7 +10,7 @@
 
 # define MAX_LN 64
 
-#define CNORM "\x1B[00m"
+# define CNORM "\x1B[00m"
 
 # ifdef _WIN32
 	# include <windows.h>
@@ -62,14 +62,6 @@ char* normalize(char *out, uint64_t bytes) {
 	} 
 }
 
-char logo[6][66] = {
-" ██████╗███████╗ █████╗",
-"██ ════ ██ ════╝██ ══██╗",
-"██║     █████╗  ███████║",
-"██║     ██ ══╝  ██ ══██║",
-"╚██████ ███████ ██║  ██║",
-"                        "
-};
 
 typedef struct sRAM {
 	uint64_t used;
@@ -81,6 +73,16 @@ int main () {
 
 	sRAM RAM = {};
 	# ifdef _WIN32
+
+	char logo[6][66] = {
+	" ______     ______     ______    ",
+	"/\\  ___\\   /\\  ___\\   /\\  __ \\   ",
+	"\\ \\ \\____  \\ \\  __\\   \\ \\  __ \\  ",
+	" \\ \\_____\\  \\ \\_____\\  \\ \\_\\ \\_\\ ",
+	"  \\/_____/   \\/_____/   \\/_/\\/_/ ",
+	"                                 "
+	};
+
 	// Get SHELL
 	TCHAR name[MAX_LN];
 	GetConsoleTitle(name, MAX_LN);
@@ -100,6 +102,16 @@ int main () {
 	# endif
 
 	# ifdef __linux__
+
+	char logo[6][66] = {
+	" ██████╗███████╗ █████╗",
+	"██ ════ ██ ════╝██ ══██╗",
+	"██║     █████╗  ███████║",
+	"██║     ██ ══╝  ██ ══██║",
+	"╚██████ ███████ ██║  ██║",
+	"                        "
+	};
+
 	// Get Available RAM
 	FILE* memf = fopen("/proc/meminfo", "r");
 	if (memf == NULL) {
