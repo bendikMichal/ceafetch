@@ -4,7 +4,7 @@
 # include <stdint.h>
 # include <stdbool.h>
 # include <math.h>
-#include <string.h>
+# include <string.h>
 
 # include "libs/stringEx.h"
 
@@ -13,9 +13,6 @@
 #define CNORM "\x1B[00m"
 
 # ifdef _WIN32
-	# define WINDOWS true
-	# define LINUX false
-
 	# include <windows.h>
 	# include <winnls.h>
 	# include <minwindef.h>
@@ -33,20 +30,17 @@
 	char SHELL[MAX_LN];
 	# define TERM "..."
 	TCHAR LANG[MAX_LN];
-
-
 # endif
 
 # ifdef __linux__
-	# define WINDOWS false
-	# define LINUX true
-
+	# include <sys/sysinfo.h>
+	# include <unistd.h>
+	
 	# define OS "Linux"
 	# define USER getenv("USER")
 	# define SHELL getenv("SHELL")
 	# define TERM getenv("TERM")
 	# define LANG getenv("LANG")
-
 # endif
 
 char* normalize(char *out, uint64_t bytes) {
@@ -103,6 +97,28 @@ int main () {
 	RAM.all = (uint64_t) stx.ullTotalPhys,
 	RAM.available = (uint64_t) stx.ullAvailPhys,
 	RAM.used = (uint64_t) (stx.ullTotalPhys - stx.ullAvailPhys)
+	# endif
+
+	# ifdef __linux__
+	// Get Available RAM
+	FILE* memf = fopen("/proc/meminfo", "r");
+	if (memf == NULL) {
+		printf("Failed to load /proc/meminfo \n");
+	}
+	char lnbuf[256];
+	unsigned long av;
+	while (fgets(lnbuf, sizeof(lnbuf), memf)) {
+		if (sscanf(lnbuf, "MemAvailable: %lu kB", &av)) break;
+	}
+	fclose(memf);
+	RAM.available = (uint64_t) av * 1024;
+	// works too but does not count cached RAM
+	/* RAM.available = get_avphys_pages() * sysconf(_SC_PAGESIZE); */
+	/* RAM.available = sysconf(_SC_AVPHYS_PAGES) * sysconf(_SC_PAGESIZE); */
+
+	RAM.all = get_phys_pages() * sysconf(_SC_PAGESIZE);
+
+	RAM.used = RAM.all - RAM.available;
 	# endif
 
 	// fetch out
