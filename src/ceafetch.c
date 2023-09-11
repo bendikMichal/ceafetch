@@ -4,6 +4,7 @@
 # include <stdint.h>
 # include <stdbool.h>
 # include <math.h>
+#include <string.h>
 
 # include "libs/stringEx.h"
 
@@ -67,6 +68,14 @@ char* normalize(char *out, uint64_t bytes) {
 	} 
 }
 
+char logo[6][66] = {
+" ██████╗███████╗ █████╗",
+"██ ════ ██ ════╝██ ══██╗",
+"██║     █████╗  ███████║",
+"██║     ██ ══╝  ██ ══██║",
+"╚██████ ███████ ██║  ██║"
+};
+
 typedef struct sRAM {
 	uint64_t used;
 	uint64_t available;
@@ -75,6 +84,7 @@ typedef struct sRAM {
 
 int main () {
 
+	sRAM RAM = {};
 	# ifdef _WIN32
 	// Get SHELL
 	TCHAR name[MAX_LN];
@@ -89,24 +99,25 @@ int main () {
 	MEMORYSTATUSEX stx;
 	stx.dwLength = sizeof(stx);
 	GlobalMemoryStatusEx(&stx);
-	sRAM RAM = {
-		.all = (uint64_t) stx.ullTotalPhys,
-		.available = (uint64_t) stx.ullAvailPhys,
-		.used = (uint64_t) (stx.ullTotalPhys - stx.ullAvailPhys)
-	};
+	RAM.all = (uint64_t) stx.ullTotalPhys,
+	RAM.available = (uint64_t) stx.ullAvailPhys,
+	RAM.used = (uint64_t) (stx.ullTotalPhys - stx.ullAvailPhys)
 	# endif
 
 	// fetch out
-	printf("\t\x1B[33m USER:%s \t%s \n", CNORM, USER);
-	printf("\t\x1B[34m SHELL:%s\t%s \n", CNORM, SHELL);
-	printf("\t\x1B[35m TERM:%s \t%s \n", CNORM, TERM);
-	printf("\t\x1B[36m LANG:%s \t%s \n", CNORM, LANG);
-	printf("\t\x1B[37m OS:%s \t%s \n", CNORM, OS);
+	printf("\n");
+	char o[MAX_LN];
+	printf("\t%s \t\x1B[33m USER:%s \t%s \n", logo[0], CNORM, USER);
+	printf("\t%s\t\x1B[34m SHELL:%s\t%s \n", logo[1], CNORM, SHELL);
+	printf("\t%s\t\x1B[35m TERM:%s \t%s \n", logo[2], CNORM, TERM);
+	printf("\t%s\t\x1B[36m LANG:%s \t%s \n", logo[3], CNORM, LANG);
+	printf("\t%s\t\x1B[37m OS:%s \t%s \n", logo[4], CNORM, OS);
 	char u[256];
 	char a[256];
 	printf("\t\x1B[38m RAM:%s \t%s / %s \n", CNORM, normalize(u, RAM.used), normalize(a, RAM.all));
 	printf("\t\t\t%s\x1B[40m  \x1B[41m  \x1B[42m  \x1B[43m  \x1B[44m  \x1B[45m  \x1B[46m  \x1B[47m  %s\n", CNORM, CNORM);
 	printf("\t\t\t%s\x1B[100m  \x1B[101m  \x1B[102m  \x1B[103m  \x1B[104m  \x1B[105m  \x1B[106m  \x1B[107m  %s\n", CNORM, CNORM);
+	printf("\n");
 
 	return 0;
 }
