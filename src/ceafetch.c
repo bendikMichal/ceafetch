@@ -73,7 +73,8 @@ char logo[6][66] = {
 "██ ════ ██ ════╝██ ══██╗",
 "██║     █████╗  ███████║",
 "██║     ██ ══╝  ██ ══██║",
-"╚██████ ███████ ██║  ██║"
+"╚██████ ███████ ██║  ██║",
+"                        "
 };
 
 typedef struct sRAM {
@@ -107,14 +108,15 @@ int main () {
 	// fetch out
 	printf("\n");
 	char o[MAX_LN];
-	printf("\t%s \t\x1B[33m USER:%s \t%s \n", logo[0], CNORM, USER);
-	printf("\t%s\t\x1B[34m SHELL:%s\t%s \n", logo[1], CNORM, SHELL);
-	printf("\t%s\t\x1B[35m TERM:%s \t%s \n", logo[2], CNORM, TERM);
-	printf("\t%s\t\x1B[36m LANG:%s \t%s \n", logo[3], CNORM, LANG);
-	printf("\t%s\t\x1B[37m OS:%s \t%s \n", logo[4], CNORM, OS);
+	printf("\t%s \t\x1B[32m USER:%s \t%s \n", logo[0], CNORM, USER);
+	printf("\t%s\t\x1B[33m SHELL:%s\t%s \n", logo[1], CNORM, SHELL);
+	printf("\t%s\t\x1B[34m TERM:%s \t%s \n", logo[2], CNORM, TERM);
+	printf("\t%s\t\x1B[35m LANG:%s \t%s \n", logo[3], CNORM, LANG);
+	printf("\t%s\t\x1B[36m OS:%s \t%s \n", logo[4], CNORM, OS);
 	char u[256];
 	char a[256];
-	printf("\t\x1B[38m RAM:%s \t%s / %s \n", CNORM, normalize(u, RAM.used), normalize(a, RAM.all));
+	printf("\t%s\t\x1B[37m RAM:%s \t%s / %s \n", logo[5], CNORM, normalize(u, RAM.used), normalize(a, RAM.all));
+
 	printf("\t\t\t%s\x1B[40m  \x1B[41m  \x1B[42m  \x1B[43m  \x1B[44m  \x1B[45m  \x1B[46m  \x1B[47m  %s\n", CNORM, CNORM);
 	printf("\t\t\t%s\x1B[100m  \x1B[101m  \x1B[102m  \x1B[103m  \x1B[104m  \x1B[105m  \x1B[106m  \x1B[107m  %s\n", CNORM, CNORM);
 	printf("\n");
