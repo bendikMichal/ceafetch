@@ -94,9 +94,9 @@ int main () {
 	MEMORYSTATUSEX stx;
 	stx.dwLength = sizeof(stx);
 	GlobalMemoryStatusEx(&stx);
-	RAM.all = (uint64_t) stx.ullTotalPhys,
-	RAM.available = (uint64_t) stx.ullAvailPhys,
-	RAM.used = (uint64_t) (stx.ullTotalPhys - stx.ullAvailPhys)
+	RAM.all = (uint64_t) stx.ullTotalPhys;
+	RAM.available = (uint64_t) stx.ullAvailPhys;
+	RAM.used = (uint64_t) (stx.ullTotalPhys - stx.ullAvailPhys);
 	# endif
 
 	# ifdef __linux__
