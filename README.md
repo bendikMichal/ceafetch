@@ -6,11 +6,11 @@
 
 ```
          ██████╗███████╗ █████╗          USER:  user
-        ██ ════ ██ ════╝██ ══██╗         SHELL: /bin/bash 
+        ██ ════ ██ ════╝██ ══██╗        SHELL: /bin/bash 
         ██║     █████╗  ███████║         TERM:  xterm 
-        ██║     ██ ══╝  ██ ══██║         LANG:  en_US.UTF-8 
+        ██║     ██ ══╝  ██ ══██║        LANG:  en_US.UTF-8 
         ╚██████ ███████ ██║  ██║         OS:    Linux 
-                                         RAM:   x.xx gb / x.xx gb 
+                                       RAM:   x.xx gb / x.xx gb 
 ```
 
 
