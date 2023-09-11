@@ -97,15 +97,16 @@ int main () {
 	# endif
 
 	// fetch out
-	printf("\t\x1B[32m OS:%s \t%s \n", CNORM, OS);
 	printf("\t\x1B[33m USER:%s \t%s \n", CNORM, USER);
 	printf("\t\x1B[34m SHELL:%s\t%s \n", CNORM, SHELL);
 	printf("\t\x1B[35m TERM:%s \t%s \n", CNORM, TERM);
 	printf("\t\x1B[36m LANG:%s \t%s \n", CNORM, LANG);
+	printf("\t\x1B[37m OS:%s \t%s \n", CNORM, OS);
 	char u[256];
 	char a[256];
-	printf("\t\x1B[37m RAM:%s \t%s / %s \n", CNORM, normalize(u, RAM.used), normalize(a, RAM.all));
-	printf("\t\t\t%s\x1B[40m \x1B[41m \x1B[42m \x1B[43m \x1B[44m \x1B[45m \x1B[46m \x1B[47m %s\n", CNORM, CNORM);
+	printf("\t\x1B[38m RAM:%s \t%s / %s \n", CNORM, normalize(u, RAM.used), normalize(a, RAM.all));
+	printf("\t\t\t%s\x1B[40m  \x1B[41m  \x1B[42m  \x1B[43m  \x1B[44m  \x1B[45m  \x1B[46m  \x1B[47m  %s\n", CNORM, CNORM);
+	printf("\t\t\t%s\x1B[100m  \x1B[101m  \x1B[102m  \x1B[103m  \x1B[104m  \x1B[105m  \x1B[106m  \x1B[107m  %s\n", CNORM, CNORM);
 
 	return 0;
 }
