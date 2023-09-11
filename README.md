@@ -5,11 +5,12 @@
 #### Example
 
 ```
-     OS:    Windows (64-bit)
-     USER:  user
-     SHELL: Command Prompt
-     TERM:  ...
-     LANG:  English
+         ██████╗███████╗ █████╗          USER:  user
+        ██ ════ ██ ════╝██ ══██╗         SHELL: /bin/bash 
+        ██║     █████╗  ███████║         TERM:  xterm 
+        ██║     ██ ══╝  ██ ══██║         LANG:  en_US.UTF-8 
+        ╚██████ ███████ ██║  ██║         OS:    Linux 
+                                         RAM:   x.xx gb / x.xx gb 
 ```
 
 
