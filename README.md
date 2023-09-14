@@ -3,15 +3,7 @@
 - A cross-platform fetch for Windows and Linux
 
 #### Example
-
-```
-         ██████╗███████╗ █████╗          USER:  user
-        ██ ════ ██ ════╝██ ══██╗         SHELL: /bin/bash 
-        ██║     █████╗  ███████║         TERM:  xterm 
-        ██║     ██ ══╝  ██ ══██║         LANG:  en_US.UTF-8 
-        ╚██████ ███████ ██║  ██║         OS:    Linux 
-                                         RAM:   x.xx gb / x.xx gb 
-```
+![Example](https://github.com/bendikMichal/ceafetch/blob/assets/ceafetch.png)
 
 
 ### How to build
