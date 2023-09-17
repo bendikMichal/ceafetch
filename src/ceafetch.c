@@ -36,7 +36,7 @@
 	# include <sys/sysinfo.h>
 	# include <unistd.h>
 	
-	# define OS "Linux"
+	// # define OS "Linux"
 	# define USER getenv("USER")
 	# define SHELL getenv("SHELL")
 	# define TERM getenv("TERM")
@@ -116,6 +116,7 @@ int main () {
 	FILE* memf = fopen("/proc/meminfo", "r");
 	if (memf == NULL) {
 		printf("Failed to load /proc/meminfo \n");
+		return 1;
 	}
 	char lnbuf[256];
 	unsigned long av;
@@ -132,6 +133,42 @@ int main () {
 
 	RAM.used = RAM.all - RAM.available;
 	# endif
+
+	// Detect OS
+	FILE* OSFile = fopen("/etc/os-release", "r");
+	if (OSFile == NULL) {
+		printf("Failed to load /etc/os_release\n");
+		return 1;
+	}
+
+	char OSFileBuffer[4096];
+
+	fread(OSFileBuffer, sizeof(OSFileBuffer), 4096, OSFile);
+	fclose(memf);
+
+	char OS[256];
+
+	char *savePointerNewLine, *savePointerEquals;
+
+	char *OSToken = strtok_r(OSFileBuffer, "\n", &savePointerNewLine);
+
+	while (OSToken != NULL) {
+		if (!(strcmp(strtok_r(OSToken, "=", &savePointerEquals), "PRETTY_NAME"))) {
+			char c = 0x22;
+			char *OSNameRaw = (char *) malloc(256);
+			char *OSNameBuffer = (char *) malloc(256);
+
+			sprintf(OSNameRaw, strtok_r(NULL, "=", &savePointerEquals));
+			substring(OSNameRaw, OSNameBuffer, 1, strlen(OSNameRaw) - 1);
+
+			sprintf(OS, "%s", OSNameBuffer);
+
+			free(OSNameRaw);
+			free(OSNameBuffer);
+		}
+
+        OSToken = strtok_r(NULL, "\n", &savePointerNewLine);
+	}
 
 	// fetch out
 	printf("\n");
