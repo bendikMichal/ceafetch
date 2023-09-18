@@ -135,39 +135,19 @@ int main () {
 	# endif
 
 	// Detect OS
+	char OS[256];
+
 	FILE* OSFile = fopen("/etc/os-release", "r");
 	if (OSFile == NULL) {
 		printf("Failed to load /etc/os-release\n");
 		return 1;
 	}
 
-	char OSFileBuffer[4096];
-
-	fread(OSFileBuffer, sizeof(OSFileBuffer), 4096, OSFile);
-	fclose(OSFile);
-
-	char OS[256];
-
-	char *savePointerNewLine, *savePointerEquals;
-
-	char *OSToken = strtok_r(OSFileBuffer, "\n", &savePointerNewLine);
-
-	while (OSToken != NULL) {
-		if (!(strcmp(strtok_r(OSToken, "=", &savePointerEquals), "PRETTY_NAME"))) {
-			char *OSNameRaw = (char *) malloc(256);
-			char *OSNameBuffer = (char *) malloc(256);
-
-			sprintf(OSNameRaw, "%s", strtok_r(NULL, "=", &savePointerEquals));
-			substring(OSNameRaw, OSNameBuffer, 1, strlen(OSNameRaw) - 1);
-
-			sprintf(OS, "%s", OSNameBuffer);
-
-			free(OSNameRaw);
-			free(OSNameBuffer);
-		}
-
-		OSToken = strtok_r(NULL, "\n", &savePointerNewLine);
+	char osLnbuf[2048];
+	while (fgets(osLnbuf, sizeof(osLnbuf), OSFile)) {
+		if (sscanf(osLnbuf, "PRETTY_NAME=\"%[A-Za-z ]\"", OS)) break;
 	}
+	fclose(OSFile);
 
 	// fetch out
 	printf("\n");
