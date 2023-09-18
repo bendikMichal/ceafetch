@@ -137,14 +137,14 @@ int main () {
 	// Detect OS
 	FILE* OSFile = fopen("/etc/os-release", "r");
 	if (OSFile == NULL) {
-		printf("Failed to load /etc/os_release\n");
+		printf("Failed to load /etc/os-release\n");
 		return 1;
 	}
 
 	char OSFileBuffer[4096];
 
 	fread(OSFileBuffer, sizeof(OSFileBuffer), 4096, OSFile);
-	fclose(memf);
+	fclose(OSFile);
 
 	char OS[256];
 
@@ -154,11 +154,10 @@ int main () {
 
 	while (OSToken != NULL) {
 		if (!(strcmp(strtok_r(OSToken, "=", &savePointerEquals), "PRETTY_NAME"))) {
-			char c = 0x22;
 			char *OSNameRaw = (char *) malloc(256);
 			char *OSNameBuffer = (char *) malloc(256);
 
-			sprintf(OSNameRaw, strtok_r(NULL, "=", &savePointerEquals));
+			sprintf(OSNameRaw, "%s", strtok_r(NULL, "=", &savePointerEquals));
 			substring(OSNameRaw, OSNameBuffer, 1, strlen(OSNameRaw) - 1);
 
 			sprintf(OS, "%s", OSNameBuffer);
@@ -167,7 +166,7 @@ int main () {
 			free(OSNameBuffer);
 		}
 
-        OSToken = strtok_r(NULL, "\n", &savePointerNewLine);
+		OSToken = strtok_r(NULL, "\n", &savePointerNewLine);
 	}
 
 	// fetch out
