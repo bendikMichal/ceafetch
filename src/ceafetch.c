@@ -132,7 +132,7 @@ int main () {
 	RAM.all = get_phys_pages() * sysconf(_SC_PAGESIZE);
 
 	RAM.used = RAM.all - RAM.available;
-	# endif
+	
 
 	// Detect OS
 	char OS[256];
@@ -148,6 +148,7 @@ int main () {
 		if (sscanf(osLnbuf, "PRETTY_NAME=\"%[A-Za-z ]\"", OS)) break;
 	}
 	fclose(OSFile);
+	# endif
 
 	// fetch out
 	printf("\n");
