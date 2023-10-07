@@ -6,7 +6,7 @@
 # include <math.h>
 # include <string.h>
 
-# include "libs/stringEx.h"
+# include "stringEx/stringEx.h"
 
 # define MAX_LN 64
 
@@ -132,7 +132,6 @@ int main () {
 	RAM.all = get_phys_pages() * sysconf(_SC_PAGESIZE);
 
 	RAM.used = RAM.all - RAM.available;
-	
 
 	// Detect OS
 	char OS[256];
