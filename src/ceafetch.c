@@ -109,8 +109,23 @@ int main () {
 	"██║     █████╗  ███████║",
 	"██║     ██ ══╝  ██ ══██║",
 	"╚██████ ███████ ██║  ██║",
-	"                        "
+	"                        ",
 	};
+
+	char lnbuf[256];
+
+	// Get cpu
+	char cpu_name[256];
+	FILE* cpuinfo = fopen("/proc/cpuinfo", "r");
+	if (cpuinfo == NULL) {
+		printf("Failed to load /proc/cpuinfo \n");
+		return 1;
+	}
+
+	while (fgets(lnbuf, sizeof(lnbuf), cpuinfo)) {
+		printf("%s", lnbuf);
+		if (sscanf(lnbuf, "model name : %[^\n]", cpu_name)) break;
+	}
 
 	// Get Available RAM
 	FILE* memf = fopen("/proc/meminfo", "r");
@@ -118,7 +133,6 @@ int main () {
 		printf("Failed to load /proc/meminfo \n");
 		return 1;
 	}
-	char lnbuf[256];
 	unsigned long av;
 	while (fgets(lnbuf, sizeof(lnbuf), memf)) {
 		if (sscanf(lnbuf, "MemAvailable: %lu kB", &av)) break;
@@ -157,9 +171,16 @@ int main () {
 	printf("\t%s\t\x1B[34m TERM:%s \t%s \n", logo[2], CNORM, TERM);
 	printf("\t%s\t\x1B[35m LANG:%s \t%s \n", logo[3], CNORM, LANG);
 	printf("\t%s\t\x1B[36m OS:%s \t%s \n", logo[4], CNORM, OS);
+
+	# ifdef __linux__
+	printf("\t%s\t\x1B[37m CPU: %s \t%s \n", logo[5], CNORM, cpu_name);
+	# endif
+
 	char u[256];
 	char a[256];
 	printf("\t%s\t\x1B[37m RAM:%s \t%s / %s \n", logo[5], CNORM, normalize(u, RAM.used), normalize(a, RAM.all));
+
+
 
 	printf("\t\t\t%s\x1B[40m  \x1B[41m  \x1B[42m  \x1B[43m  \x1B[44m  \x1B[45m  \x1B[46m  \x1B[47m  %s\n", CNORM, CNORM);
 	printf("\t\t\t%s\x1B[100m  \x1B[101m  \x1B[102m  \x1B[103m  \x1B[104m  \x1B[105m  \x1B[106m  \x1B[107m  %s\n", CNORM, CNORM);
